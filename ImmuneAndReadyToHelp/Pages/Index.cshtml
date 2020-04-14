@@ -1,0 +1,248 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Immune And Ready To Help";
+    Layout = "_IndexLayout";
+}
+
+@section Head
+{
+    <environment include="Development">
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    </environment>
+    
+    
+    <script src="https://unpkg.com/@@babel/standalone/babel.min.js"></script>
+
+    <style>
+        .opportunity-item {
+            width: 100%;
+        }
+
+        .unstyled-link {
+            color: inherit; 
+            text-decoration: inherit; 
+        }
+
+        .unstyled-link:hover {
+            color: inherit;
+            text-decoration: inherit;
+        }
+    </style>
+}
+
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('/assets/img/city-profile.jpg');">
+    <div class="main main-raised" style="background-color: gray; color: white; margin: auto; width: 95%; text-align: center; padding: 1em;">
+        <h2 style="margin: auto;">Recovered From COVID-19?</h2>
+        <h4 style="margin: auto;">Hospitals, Employers, and Non-Profits Want To Connect With YOU!</h4>
+    </div>
+</div>
+<div class="main main-raised">
+    <div class="profile-content">
+        <div class="container">
+            <div class="row page-sub-head">
+                <div class="col-md-12">Recovering From COVID-19 Puts You At Much Lower Risk Of Infection!</div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    If you fully recovered from COVID-19, your body developed antibodies against your infection, and as <a href="https://www.theguardian.com/world/2020/mar/16/the-big-question-over-coronavirus-can-a-person-get-it-twice">The Guardian</a> puts it, "The definitive answer not yet known, but experts say reinfection seems unlikely".
+                    This puts you in unique demand for the employment and <span style="text-decoration: underline">volunteer opportunities listed below!</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 learn-more" onclick="window.location = '/Opportunity';">
+                    Have An Opportunity To Add? Create One Here!
+                </div>
+            </div>
+            <div id="map-row" class="row">
+                <div id="map" class="col-md-12"></div>
+            </div>
+            <div class="row">
+                <div id="opportunity-list-view">
+                    @*React Binds The List View Here*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer footer-default" style="margin-top: 10px;">
+    <div class="container">
+        <div class="copyright float-right">
+            &copy;
+            <script>
+                document.write(new Date().getFullYear())
+            </script>, Immune And Ready To Help
+        </div>
+    </div>
+</footer>
+<!--   Core JS Files   -->
+<script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="/assets/js/plugins/moment.min.js"></script>
+<!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
+<script src="/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+<script src="/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<!--  Google Maps Plugin    -->
+<!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
+<script src="/assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+
+<script type="text/babel">
+    function ViewOpportunity(opportunityId){
+        window.location = '/ViewOpportunity?OpportunityId=' + opportunityId;
+    }
+
+    function BindOpportunities(opportunities) {
+    const listItems = opportunities.map((opportunity) =>
+    <div className="row listing" key="opportunityId.toString()">
+        <div className="col-md-12">
+            <div className="container">
+                <div className="row">
+                    <div className="col-xs-12 opportunity-item">
+                        <div className="container">
+                            <div className="row page-sub-head">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td style={{paddingRight: '20px'}}><img src={opportunity.logoUrl} className="company-logo" /> </td>
+                                            <td>{opportunity.title.toString()}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <br />{opportunity.description.toString()}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-md-12 learn-more">
+                                    <a className="unstyled-link" href={'/ViewOpportunity?OpportunityId=' + opportunity.opportunityId}>Learn More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    );
+
+    ReactDOM.render(
+    <div className="container opportunity">{listItems}</div>,
+    document.getElementById('opportunity-list-view')
+    );
+    }
+</script>
+<script type="text/javascript">
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+    var map, infoWindow;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 9
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                map.setCenter(pos);
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+        var markers = [];
+
+        function clearMarkers() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+        }
+
+        // Deletes all markers in the array by removing references to them.
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+
+        google.maps.event.addListener(map, 'bounds_changed', function () {
+            deleteMarkers();
+            var bounds = map.getBounds();
+
+            var ne = bounds.getNorthEast();
+            var sw = bounds.getSouthWest();
+
+            var data = {
+                "northEastCorner": {
+                    "latitude": ne.lat(),
+                    "longitude": ne.lng()
+                },
+                "southWestCorner": {
+                    "latitude": sw.lat(),
+                    "longitude": sw.lng()
+                }
+            };
+
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                'type': 'POST',
+                'url': '/api/Opportunities/FindWithinRange',
+                'data': JSON.stringify(data),
+                'dataType': 'json',
+                'success': (opportunities) => {
+                    BindOpportunities(opportunities);
+
+                    for (var i = 0; i < opportunities.length; i++) {
+                        const opportunity = opportunities[i];
+                        const marker = new google.maps.Marker({
+                            position: {
+                                lat: opportunity.locationOfOpportunity.latitude,
+                                lng: opportunity.locationOfOpportunity.longitude
+                            },
+                            title: opportunity.title
+                        });
+                        marker.setMap(map);
+                        //save reference to marker so we can delete it later
+                        markers.push(marker);
+                    };
+                }
+            });
+        });
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG3jxiXOU_pC7ymOuOUeHFVkwz1icml08&callback=initMap">
+</script>
