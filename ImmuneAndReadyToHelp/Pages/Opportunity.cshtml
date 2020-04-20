@@ -145,6 +145,8 @@
                     <div><textarea rows="4" asp-for="Description"></textarea></div><span asp-validation-for="Description" class="text-danger"></span>
                     <div><label>Describe How You'll Verify Your Applicants' COVID-19 Immunity*</label></div>
                     <div><textarea rows="4" asp-for="ImmunityProofRequirements"></textarea></div><span asp-validation-for="ImmunityProofRequirements" class="text-danger"></span>
+                    <div><label>Opportunity Web Page URL (Optional)</label></div>
+                    <div><input type="url" asp-for="OpportunityPageUri" /></div><span asp-validation-for="OpportunityPageUri" class="text-danger"></span>
                 </div>
             </div>
         </fieldset>

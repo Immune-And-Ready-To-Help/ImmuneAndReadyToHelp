@@ -1,0 +1,74 @@
+﻿@page
+@model ImmuneAndReadyToHelp.Pages.ApplyModel
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "_Layout";
+}
+
+@section Head{
+    @*<link rel="icon" type="image/png" href="images/icons/favicon.ico" />*@
+    <link rel="stylesheet" type="text/css" href="~/css/map-form.css" asp-append-version="true" />
+
+    <style>
+        .opp-title {
+            display: flex;
+            padding-left: 10px;
+        }
+
+        .opp-title:before {
+            height: 100px;
+            width: 200px;
+            content: "";
+            background: url(@Model.CompanyLogoUri) no-repeat 0 0;
+            background-size: 100px 100px;
+        }
+    </style>
+}
+
+
+<div class="container-contact100">
+    <div class="contact100-map" id="google_map" longitude="@Model.OpportunityLocation.Longitude" latitude="@Model.OpportunityLocation.Latitude" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
+
+    <div class="wrap-contact100">
+        <form class="contact100-form validate-form">
+            <span class="contact100-form-title opp-title">
+                @Model.Title
+            </span>
+
+            <div class="opp-info">
+                <strong>What's Needed</strong><br />
+                <span>@Model.Description</span>
+            </div>
+
+            <div class="opp-info">
+                <strong>How We Verify Your COVID-19 Antibodies</strong><br />
+                <span>@Model.ImmunityProofRequirements</span>
+            </div>
+
+
+            <div class="container-contact100-form-btn">
+                <button id="apply-now-button" class="contact100-form-btn">
+                    Apply Now
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--===============================================================================================-->
+
+@section Scripts{
+    <script defer src="@Href("https://maps.googleapis.com/maps/api/js?&key=" + Model.GoogleMapsApiKey)">
+    </script>
+
+    <script defer src="~/js/form-map.js" asp-append-version="true"></script>
+
+    <script>
+        $( "#apply-now-button" ).click(() => {
+            window.open("@(Model.OpportunityPageUri != null ? Model.OpportunityPageUri.AbsoluteUri : "mailto:" + Model.EMailAddressOfOpportunityContact + "?subject=My Application For: " + Model.Title)");
+            return false;
+        });
+    </script>
+}
+
+

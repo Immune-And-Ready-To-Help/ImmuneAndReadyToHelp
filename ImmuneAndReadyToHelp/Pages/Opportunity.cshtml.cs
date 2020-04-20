@@ -22,7 +22,9 @@ namespace ImmuneAndReadyToHelp.Pages
         [BindProperty]
 		[Required(ErrorMessage = "Please enter a valid email so we can send applications and a link to manage this opportunity.")]
 		public string EmailOfOpportunityContact { get; set; }
-		[BindProperty]
+        [BindProperty]
+        public Uri OpportunityPageUri { get; set; }
+        [BindProperty]
 		[Required(ErrorMessage = "Please describe the nature of your opportunity here in detail.")]
 		public string Description { get; set; }
 		[BindProperty]
@@ -66,6 +68,7 @@ namespace ImmuneAndReadyToHelp.Pages
             newOpportunity.FullAddress = FullAddressOfOpportunity;
             newOpportunity.ImmunityProofRequirements = ImmunityProofRequirements;
             newOpportunity.ExpirationDate = ExpirationDate;
+            newOpportunity.OpportunityPageUri = OpportunityPageUri;
 
             //TODO: note... this is currently a mock instance that we'll want to replace with Google Maps
             await Task.WhenAll(

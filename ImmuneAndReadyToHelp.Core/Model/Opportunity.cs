@@ -15,40 +15,33 @@ namespace ImmuneAndReadyToHelp.Core.Model
 
         [BsonId]
         public Guid OpportunityId { get; set; } = Guid.NewGuid();
-
         public string DeleteId { get; set; } = GenerateLongId();
-
         public string EditId { get; set; } = GenerateLongId();
-
+        public string ActivationId { get; set; } = GenerateLongId();
         public string FullAddress { get; set; }
-
         //TODO: automatically get lat/long based on postal code
         public Coordinate LocationOfOpportunity { get; set; }
-
         public string Title
         {
             //sanitize in both cases in case we missed something in an earlier version of code
             get { return title.SanitizeInput(); }
             set { title = value.SanitizeInput(); }
         }
-
         public string Description
         {
             //sanitize in both cases in case we missed something in an earlier version of code
             get { return description.SanitizeInput(); }
             set { description = value.SanitizeInput(); }
         }
-        
         public string ImmunityProofRequirements
         {
             //sanitize in both cases in case we missed something in an earlier version of code
             get { return immunityProofRequirements.SanitizeInput(); }
             set { immunityProofRequirements = value.SanitizeInput(); }
         }
-
         public Uri CompanyLogo { get; set; }
-
         public string EMailAddressOfOpportunityContact { get; set; }
+        public Uri OpportunityPageUri { get; set; }
         public DateTime ExpirationDate { get; set; }
         public DateTime? ManualDeletionDate { get; set; }
 
@@ -93,10 +86,11 @@ namespace ImmuneAndReadyToHelp.Core.Model
                 Description =
                 "Together, we have a real chance to make and impact on the world, but we need your help!" + Environment.NewLine + Environment.NewLine
                 + "Help spread the word about the website and help the global community!",
-                ImmunityProofRequirements = "None.",
+                ImmunityProofRequirements = "None. Just a willingness to tell your collegues and friends!",
                 LocationOfOpportunity = centerOfMap,
                 CompanyLogo = new Uri("https://www.ImmuneAndReadyToHelp.com/images/Antibody.png"),
-                ExpirationDate = DateTime.Now
+                ExpirationDate = DateTime.Now,
+                OpportunityPageUri = new Uri("https://www.facebook.com/ImmuneAndReadyToHelp")
             };
         }
     }

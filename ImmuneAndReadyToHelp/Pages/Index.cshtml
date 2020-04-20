@@ -98,10 +98,6 @@
 <script src="/assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
 
 <script type="text/babel">
-    function ViewOpportunity(opportunityId){
-        window.location = '/ViewOpportunity?OpportunityId=' + opportunityId;
-    }
-
     function BindOpportunities(opportunities) {
     const listItems = opportunities.map((opportunity) =>
     <div className="row listing" key="opportunityId.toString()">
@@ -127,7 +123,7 @@
                             </div>
                             <div className="row">
                                 <div className="col-md-12 learn-more">
-                                    <a className="unstyled-link" href={'/ViewOpportunity?OpportunityId=' + opportunity.opportunityId}>Learn More</a>
+                                    <a className="unstyled-link" href={'/Apply?OpportunityId=' + opportunity.opportunityId}>Learn More</a>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +148,7 @@
     var map, infoWindow;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: -34.397, lng: 150.644 },
+            center: { lat: 30.2672, lng: -97.7431 },
             zoom: 9
         });
         infoWindow = new google.maps.InfoWindow;
@@ -244,5 +240,5 @@
     }
 </script>
 <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAG3jxiXOU_pC7ymOuOUeHFVkwz1icml08&callback=initMap">
+        src="@Href("https://maps.googleapis.com/maps/api/js?callback=initMap&key=" + Model.GoogleMapsApiKey)">
 </script>
