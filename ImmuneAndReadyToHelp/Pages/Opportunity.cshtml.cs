@@ -11,6 +11,7 @@ using ImmuneAndReadyToHelp.Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 
 namespace ImmuneAndReadyToHelp.Pages
 {
@@ -39,19 +40,24 @@ namespace ImmuneAndReadyToHelp.Pages
 		[Required(ErrorMessage = "We need a 300x300 logo uploaded for your organization to show your brand and get applicants' attention.")]
 		public IFormFile LogoToDisplay { get; set; }
 
+        public Coordinate AustinDefaultLocation { get; } = new Coordinate { Latitude = 30.2672, Longitude = -97.7431 };
+
         private IOpportunityDataAccess OpportunityDataAccess { get; set; }
         private IEmailService EmailService { get; set; }
         private IGeocodingService GeolocationService { get; set; }
         private ILogoStorage LogoStorage { get; set; }
 
+        public string GoogleMapsApiKey { get; set; }
 
         public OpportunityModel(
+            IConfiguration config,
             IOpportunityDataAccess opportunityDataAccess, 
             IEmailService emailService, 
             IGeocodingService geolocationService,
             ILogoStorage logoStorage
             )
         {
+            GoogleMapsApiKey = config["GoogleMapsApiKey"];
             OpportunityDataAccess = opportunityDataAccess;
             EmailService = emailService;
             GeolocationService = geolocationService;

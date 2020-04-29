@@ -64,10 +64,10 @@
     <script defer src="~/js/form-map.js" asp-append-version="true"></script>
 
     <script>
-        $( "#apply-now-button" ).click(() => {
-            window.open("@(Model.OpportunityPageUri != null ? Model.OpportunityPageUri.AbsoluteUri : "mailto:" + Model.EMailAddressOfOpportunityContact + "?subject=My Application For: " + Model.Title)");
-            return false;
-        });
+    $( "#apply-now-button" ).click(() => {
+        window.open("@(Model.OpportunityPageUri != null ? Model.OpportunityPageUri.AbsoluteUri : "mailto:" + Model.EMailAddressOfOpportunityContact + "?subject=My Application For: " + Model.Title)");
+        return false;
+    });
     </script>
 }
 

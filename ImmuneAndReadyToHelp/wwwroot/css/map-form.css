@@ -1,6 +1,43 @@
 ﻿
 
+/*//////////////////////////////////////////////////////////////////
+[ CUSTOMIZATIONS ]*/
+body{
+    font-family: sans-serif;
+}
+h3 {
+    margin: 12px 0;
+    color: #57b846;
+}
 
+user agent stylesheet
+h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+fieldset {
+    border: none;
+    border-top: 1px solid #57b846;
+}
+
+fieldset > div > div {
+    padding-top: 10px;
+    font-weight: bold;
+}
+
+input, textarea{
+    width: 100%;
+}
+
+label{
+    margin-top: 10px;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
@@ -74,7 +111,7 @@ ul, li {
 
 
 /*---------------------------------------------*/
-input {
+/*input {
     outline: none;
     border: none;
 }
@@ -86,7 +123,7 @@ textarea {
 
     textarea:focus, input:focus {
         border-color: transparent !important;
-    }
+    }*/
 
 
 input::-webkit-input-placeholder {
@@ -173,7 +210,7 @@ iframe {
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
-    padding: 62px 55px 65px 55px;
+    padding: 40px 55px 40px 55px;
     box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 3px 20px 0px rgba(0, 0, 0, 0.1);
@@ -332,14 +369,14 @@ textarea.input100 {
 /*==================================================================
 [ Restyle Checkbox ]*/
 
-.contact100-form-checkbox {
+/*.contact100-form-checkbox {
     padding-top: 12px;
     padding-bottom: 28px;
 }
 
 .input-checkbox100 {
     display: none;
-}
+}*/
 
 .label-checkbox100 {
     display: inline-block;
@@ -418,6 +455,7 @@ textarea.input100 {
     -o-transition: all 0.4s;
     -moz-transition: all 0.4s;
     transition: all 0.4s;
+    border-radius: 25px;
 }
 
     .contact100-form-btn:hover {

@@ -18,49 +18,26 @@
     
     
     <script src="https://unpkg.com/@@babel/standalone/babel.min.js"></script>
-
-    <style>
-        .opportunity-item {
-            width: 100%;
-        }
-
-        .unstyled-link {
-            color: inherit; 
-            text-decoration: inherit; 
-        }
-
-        .unstyled-link:hover {
-            color: inherit;
-            text-decoration: inherit;
-        }
-    </style>
 }
 
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('/assets/img/city-profile.jpg');">
-    <div class="main main-raised" style="background-color: gray; color: white; margin: auto; width: 95%; text-align: center; padding: 1em;">
-        <h2 style="margin: auto;">Recovered From COVID-19?</h2>
-        <h4 style="margin: auto;">Hospitals, Employers, and Non-Profits Want To Connect With YOU!</h4>
+<div style="position: absolute; top: 10px; right: 0; margin-right: 2%; z-index:5">
+    <button class="learn-more" onclick="window.location = '/Opportunity';">
+        Create An Opportunity!
+    </button>
+</div>
+
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('/images/AntibodyBannerMini.jpg');">
+    <div class="main main-raised splash">
+        <h2 style="margin: auto;">Do You Have COVID-19 Antibodies?</h2>
+        <h4 style="margin: auto;">There Is Urgent Need For YOUR Help!</h4>
     </div>
 </div>
 <div class="main main-raised">
     <div class="profile-content">
         <div class="container">
-            <div class="row page-sub-head">
-                <div class="col-md-12">Recovering From COVID-19 Puts You At Much Lower Risk Of Infection!</div>
-            </div>
             <div class="row">
-                <div class="col-md-12">
-                    If you fully recovered from COVID-19, your body developed antibodies against your infection, and as <a href="https://www.theguardian.com/world/2020/mar/16/the-big-question-over-coronavirus-can-a-person-get-it-twice">The Guardian</a> puts it, "The definitive answer not yet known, but experts say reinfection seems unlikely".
-                    This puts you in unique demand for the employment and <span style="text-decoration: underline">volunteer opportunities listed below!</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 learn-more" onclick="window.location = '/Opportunity';">
-                    Have An Opportunity To Add? Create One Here!
-                </div>
-            </div>
-            <div id="map-row" class="row">
-                <div id="map" class="col-md-12"></div>
+                <h3>Nearby Opportunities</h3>
+                <div id="map" class="map"></div>
             </div>
             <div class="row">
                 <div id="opportunity-list-view">
@@ -85,17 +62,17 @@
     </div>
 </footer>
 <!--   Core JS Files   -->
-<script src="/assets/js/core/jquery.min.js" type="text/javascript"></script>
-<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="/assets/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
-<script src="/assets/js/plugins/moment.min.js"></script>
+<script src="/js/core/jquery.min.js" type="text/javascript"></script>
+<script src="/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
+<script src="/js/plugins/moment.min.js"></script>
 <!--	Plugin for the Datepicker, full documentation here: https://github.com/Eonasdan/bootstrap-datetimepicker -->
-<script src="/assets/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<script src="/js/plugins/bootstrap-datetimepicker.js" type="text/javascript"></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="/assets/js/plugins/nouislider.min.js" type="text/javascript"></script>
+<script src="/js/plugins/nouislider.min.js" type="text/javascript"></script>
 <!--  Google Maps Plugin    -->
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
-<script src="/assets/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
+<script src="/js/material-kit.js?v=2.0.7" type="text/javascript"></script>
 
 <script type="text/babel">
     function BindOpportunities(opportunities) {

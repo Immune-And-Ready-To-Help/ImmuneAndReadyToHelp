@@ -4,152 +4,62 @@
     ViewData["Title"] = "Create Opportunity";
 }
 
-@section Head{
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <style>
-        html, body {
-            min-height: 100%;
-        }
-
-        body, div, form, input, select, p {
-            padding: 0;
-            margin: 0;
-            outline: none;
-            font-family: Roboto, Arial, sans-serif;
-            font-size: 14px;
-            color: #666;
-        }
-
-        h1 {
-            margin: 0;
-            font-weight: 400;
-        }
-
-        h3 {
-            margin: 12px 0;
-            color: slategrey;
-        }
-
-        .main-block {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #fff;
-        }
-
-        form {
-            width: 100%;
-            padding: 20px;
-        }
-
-        fieldset {
-            border: none;
-            border-top: 1px solid slategrey;
-        }
-
-        .account-details, .personal-details {
-            /*display: flex;
-        flex-wrap: wrap;*/
-            justify-content: space-between;
-        }
-
-            .account-details > div, .personal-details > div > div {
-                /*display: flex;*/
-                align-items: center;
-                margin-bottom: 10px;
-            }
-
-            .account-details > div, .personal-details > div, input, label {
-                width: 100%;
-            }
-
-        label {
-            padding: 0 5px;
-            text-align: right;
-            vertical-align: middle;
-        }
-
-        input {
-            padding: 5px;
-            vertical-align: middle;
-            width: 90% !important;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px 0;
-            margin: 10px auto;
-            border-radius: 5px;
-            border: none;
-            background: #8ebf42;
-            font-size: 14px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-            button:hover {
-                background: #82b534;
-            }
-
-        textarea {
-            width: 92%;
-        }
-
-        input[type=submit] {
-            width: 50% !important;
-        }
-
-        @@media (min-width: 568px) {
-            .account-details > div, .personal-details > div {
-                width: 50%;
-            }
-
-            label {
-                width: 50%;
-            }
-
-            input {
-                width: 90%;
-            }
-        }
-    </style>
-}
-
 <partial name="_ValidationScriptsPartial" />
 
-<div class="main-block">
-    <form method="post" enctype="multipart/form-data">
-        <h1>Create a new opportunity</h1>
-        <fieldset>
-            <legend>
-                <h3>Tell Us About Your Organization</h3>
-            </legend>
-            <div class="account-details">
-                <div><label>Opportunity Contact Email*</label></div>
-                <div><input type="email" asp-for="EmailOfOpportunityContact" /></div><span asp-validation-for="EmailOfOpportunityContact" class="text-danger"></span>
-                <div><label>300x300 Organizational Logo*</label><input type="file" asp-for="LogoToDisplay" /></div><span asp-validation-for="LogoToDisplay" class="text-danger"></span>
-                <div><label>Full Organization Address*</label></div>
-                <div><textarea rows="2" asp-for="FullAddressOfOpportunity"></textarea></div><span asp-validation-for="FullAddressOfOpportunity" class="text-danger"></span>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>
-                <h3>Tell Us About Your Opportunity</h3>
-            </legend>
-            <div class="personal-details">
-                <div>
+
+@section Head{
+    @*<link rel="icon" type="image/png" href="images/icons/favicon.ico" />*@
+    <link rel="stylesheet" type="text/css" href="~/css/map-form.css" asp-append-version="true" />
+}
+
+<div class="container-contact100">
+    <div class="contact100-map" id="google_map" longitude="@Model.AustinDefaultLocation.Longitude" latitude="@Model.AustinDefaultLocation.Latitude" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
+
+    <div class="wrap-contact100">
+        <form class="contact100-form validate-form" method="post" enctype="multipart/form-data">
+
+            <h3>
+                Tell Us About Your Organization
+            </h3>
+
+            <fieldset>
+                <div class="opp-info">
+                    <div><label>Opportunity Contact Email*</label></div>
+                    <div><input type="email" asp-for="EmailOfOpportunityContact" /></div><span asp-validation-for="EmailOfOpportunityContact" class="text-danger"></span>
+                    <div><label>300x300 Organizational Logo*</label><input type="file" asp-for="LogoToDisplay" /></div><span asp-validation-for="LogoToDisplay" class="text-danger"></span>
+                    <div><label>Full Organization Address*</label></div>
+                    <div><textarea rows="2" asp-for="FullAddressOfOpportunity"></textarea></div><span asp-validation-for="FullAddressOfOpportunity" class="text-danger"></span>
+                </div>
+            </fieldset>
+
+            <h3>
+                Tell Us About Your Opportunity
+            </h3>
+
+            <fieldset>
+                <div class="opp-info">
                     <div><label>What's The Title of Your Opportunity*</label></div>
                     <div><input type="text" asp-for="Title" /></div><span asp-validation-for="Title" class="text-danger"></span>
                     <div><label>Please Describe Your Opportunity*</label></div>
                     <div><textarea rows="4" asp-for="Description"></textarea></div><span asp-validation-for="Description" class="text-danger"></span>
-                    <div><label>Describe How You'll Verify Your Applicants' COVID-19 Immunity*</label></div>
+                    <div><label>Describe How You'll Verify Your Applicants' COVID-19 Antibodies*</label></div>
                     <div><textarea rows="4" asp-for="ImmunityProofRequirements"></textarea></div><span asp-validation-for="ImmunityProofRequirements" class="text-danger"></span>
                     <div><label>Opportunity Web Page URL (Optional)</label></div>
                     <div><input type="url" asp-for="OpportunityPageUri" /></div><span asp-validation-for="OpportunityPageUri" class="text-danger"></span>
                 </div>
+            </fieldset>
+            <div class="container-contact100-form-btn">
+                <button id="apply-now-button" class="contact100-form-btn" type="submit">
+                    Create Opportunity
+                </button>
             </div>
-        </fieldset>
-        <input type="submit" />
-    </form>
+        </form>
+    </div>
 </div>
+
+@section Scripts{
+    <script defer src="@Href("https://maps.googleapis.com/maps/api/js?&key=" + Model.GoogleMapsApiKey)">
+    </script>
+
+    <script defer src="~/js/form-map.js" asp-append-version="true"></script>
+}

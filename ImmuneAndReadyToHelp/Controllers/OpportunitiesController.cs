@@ -54,7 +54,7 @@ namespace ImmuneAndReadyToHelp.Controllers
             );
             
 
-            return listOfOpportunityEssentials.OrderBy((o) => o.ExpirationDate);
+            return listOfOpportunityEssentials.OrderByDescending((o) => o.ExpirationDate);
         }
     }
 
