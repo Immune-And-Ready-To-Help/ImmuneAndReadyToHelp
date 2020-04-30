@@ -8,6 +8,6 @@ namespace ImmuneAndReadyToHelp.Core
 {
     public interface IGeocodingService
     {
-        Task<Coordinate> GetGeolocationFromAddress(string address);
+        Task<GeocodingResult> GetGeolocationFromAddress(string address);
     }
 }

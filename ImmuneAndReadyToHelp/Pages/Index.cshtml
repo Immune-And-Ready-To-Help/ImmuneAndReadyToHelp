@@ -18,6 +18,18 @@
 
 
     <script src="https://unpkg.com/@@babel/standalone/babel.min.js"></script>
+
+    <style>
+        #btn-update-location{
+            width: 100%;
+        }
+
+        #search-location {
+            width: 100%;
+            font-size: 40px;
+            margin-top: 13px;
+        }
+    </style>
 }
 
 
@@ -46,6 +58,16 @@
             <div class="row">
                 <h3 class="give-it-space">Nearby Opportunities</h3>
                 <div id="map" class="map"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <input type="text" id="search-location" />
+                </div>
+                <div class="col-md-3">
+                    <button id="btn-update-location" class="learn-more" onclick='SetLocationByAddress($("#search-location").val());'>
+                        Update Location
+                    </button>
+                </div>
             </div>
             <div class="row">
                 <div id="opportunity-list-view">
@@ -131,9 +153,104 @@
     // failed.", it means you probably did not give permission for the browser to
     // locate you.
     var map, infoWindow;
+    var markers = [];
+    var callQueued = false;
+    var locationInitialized = false;
+
+    function clearMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+    }
+
+    // Deletes all markers in the array by removing references to them.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+
+    function SetLocationByAddress(address) {
+        GetGeocoding(
+            address,
+            (geocoding) => {
+                //update the text box that displays the search location
+                $('#search-location').val(`${geocoding.city}, ${geocoding.state}`);
+
+                var pos = {
+                    lat: geocoding.coordinate.latitude,
+                    lng: geocoding.coordinate.longitude
+                };
+
+                locationInitialized = true;
+                map.setCenter(pos);
+            }
+        );
+    }
+
+    function GetGeocoding(address, success) {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'type': 'GET',
+            'url': `/api/Geocoding/${encodeURIComponent(address)}`,
+            'success': success
+        });
+    }
+
+    function UpdateMapLocation(bounds) {
+        deleteMarkers();
+
+        var ne = bounds.getNorthEast();
+        var sw = bounds.getSouthWest();
+
+        var data = {
+            "northEastCorner": {
+                "latitude": ne.lat(),
+                "longitude": ne.lng()
+            },
+            "southWestCorner": {
+                "latitude": sw.lat(),
+                "longitude": sw.lng()
+            }
+        };
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'type': 'POST',
+            'url': '/api/Opportunities/FindWithinRange',
+            'data': JSON.stringify(data),
+            'dataType': 'json',
+            'success': (opportunities) => {
+                BindOpportunities(opportunities);
+
+                for (var i = 0; i < opportunities.length; i++) {
+                    const opportunity = opportunities[i];
+                    const marker = new google.maps.Marker({
+                        position: {
+                            lat: opportunity.locationOfOpportunity.latitude,
+                            lng: opportunity.locationOfOpportunity.longitude
+                        },
+                        title: opportunity.title
+                    });
+                    marker.setMap(map);
+                    //save reference to marker so we can delete it later
+                    markers.push(marker);
+                };
+            }
+        });
+    }
+
     function initMap() {
+        //defaults to Austin, TX
+        let pos = { lat: 30.2672, lng: -97.7431 };
+
         map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 30.2672, lng: -97.7431 },
+            center: pos,
             zoom: 9
         });
         infoWindow = new google.maps.InfoWindow;
@@ -141,12 +258,10 @@
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
+                pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-
-                map.setCenter(pos);
             }, function () {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
@@ -154,65 +269,21 @@
             // Browser doesn't support Geolocation
             handleLocationError(false, infoWindow, map.getCenter());
         }
-        var markers = [];
 
-        function clearMarkers() {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-        }
-
-        // Deletes all markers in the array by removing references to them.
-        function deleteMarkers() {
-            clearMarkers();
-            markers = [];
-        }
+        SetLocationByAddress(`${pos.lat}, ${pos.lng}`);
 
         google.maps.event.addListener(map, 'bounds_changed', function () {
-            deleteMarkers();
-            var bounds = map.getBounds();
-
-            var ne = bounds.getNorthEast();
-            var sw = bounds.getSouthWest();
-
-            var data = {
-                "northEastCorner": {
-                    "latitude": ne.lat(),
-                    "longitude": ne.lng()
-                },
-                "southWestCorner": {
-                    "latitude": sw.lat(),
-                    "longitude": sw.lng()
-                }
-            };
-
-            $.ajax({
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                'type': 'POST',
-                'url': '/api/Opportunities/FindWithinRange',
-                'data': JSON.stringify(data),
-                'dataType': 'json',
-                'success': (opportunities) => {
-                    BindOpportunities(opportunities);
-
-                    for (var i = 0; i < opportunities.length; i++) {
-                        const opportunity = opportunities[i];
-                        const marker = new google.maps.Marker({
-                            position: {
-                                lat: opportunity.locationOfOpportunity.latitude,
-                                lng: opportunity.locationOfOpportunity.longitude
-                            },
-                            title: opportunity.title
-                        });
-                        marker.setMap(map);
-                        //save reference to marker so we can delete it later
-                        markers.push(marker);
-                    };
-                }
-            });
+            const delaySeconds = .5;
+            if (!callQueued && locationInitialized) {
+                //prevent quick succession of calls and limit to one every delaySeconds interval
+                callQueued = true;
+                setTimeout(
+                    () => {
+                        callQueued = false;
+                        const bounds = map.getBounds();
+                        UpdateMapLocation(bounds);
+                    }, delaySeconds * 1000);
+            } 
         });
     }
 

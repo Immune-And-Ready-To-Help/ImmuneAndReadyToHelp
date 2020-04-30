@@ -78,7 +78,7 @@ namespace ImmuneAndReadyToHelp.Pages
 
             //TODO: note... this is currently a mock instance that we'll want to replace with Google Maps
             await Task.WhenAll(
-                    Task.Run(async () => { newOpportunity.LocationOfOpportunity = await Getgeocoding(); }),
+                    Task.Run(async () => { newOpportunity.LocationOfOpportunity = (await Getgeocoding()).Coordinate; }),
                     Task.Run(async () => { newOpportunity.CompanyLogo = await UploadLogo(); })
                 );
 
@@ -123,7 +123,7 @@ namespace ImmuneAndReadyToHelp.Pages
             return null;
         }
 
-        private async Task<Coordinate> Getgeocoding()
+        private async Task<GeocodingResult> Getgeocoding()
         {
 
             if (!String.IsNullOrEmpty(FullAddressOfOpportunity))

@@ -8,12 +8,15 @@ namespace ImmuneAndReadyToHelp.Core.Services.Mock
 {
     public class MockGeolocationService : IGeocodingService
     {
-        public async Task<Coordinate> GetGeolocationFromAddress(string address)
+        public async Task<GeocodingResult> GetGeolocationFromAddress(string address)
         {
-            return new Coordinate
-            {
-                Latitude = 1,
-                Longitude = 1
+            return new GeocodingResult
+            { 
+                Coordinate = new Coordinate
+                {
+                    Latitude = 1,
+                    Longitude = 1
+                }
             };
         }
     }
