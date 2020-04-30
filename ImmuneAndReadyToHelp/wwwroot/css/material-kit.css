@@ -21,6 +21,33 @@
     height: calc(70vh - 30px);
 }
 
+.button-bar {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    margin-right: 2%;
+    z-index: 5;
+}
+
+.splash {
+    position: absolute;
+    top: 100px;
+    width: 95%;
+    text-align: center;
+    padding: 1em;
+    border: 3px solid #57b846;
+    z-index: 5;
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+}
+
+.give-it-space {
+    padding-left: 10px;
+}
+
 .listing {
     border-radius: 25px;
     border: 2px solid #57b846;
@@ -32,13 +59,14 @@
     border-radius: 25px;
     border: 2px solid #57b846;
     background-color: #57b846;
-    padding: 20px;
+    padding: 15px;
     margin: 10px;
     text-align: center;
     color: white;
     font-weight: bolder;
     cursor: pointer;
 }
+
 
 .page-sub-head {
     font-weight: bold;
@@ -64,14 +92,6 @@
 .unstyled-link:hover {
     color: inherit;
     text-decoration: inherit;
-}
-
-.splash {
-    margin: auto;
-    width: 95%;
-    text-align: center;
-    padding: 1em;
-    border: 3px solid #57b846;
 }
 
 h2 {

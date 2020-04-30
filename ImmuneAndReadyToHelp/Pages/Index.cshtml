@@ -15,28 +15,36 @@
         <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
     </environment>
-    
-    
+
+
     <script src="https://unpkg.com/@@babel/standalone/babel.min.js"></script>
 }
 
-<div style="position: absolute; top: 10px; right: 0; margin-right: 2%; z-index:5">
+
+
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('/images/AntibodyBannerMini.jpg');">
+    &nbsp;
+</div>
+
+<div class="button-bar">
+    <button class="learn-more" onclick="window.location = '/Faq';">
+        FAQ
+    </button>
     <button class="learn-more" onclick="window.location = '/Opportunity';">
         Create An Opportunity!
     </button>
 </div>
 
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('/images/AntibodyBannerMini.jpg');">
-    <div class="main main-raised splash">
-        <h2 style="margin: auto;">Do You Have COVID-19 Antibodies?</h2>
-        <h4 style="margin: auto;">There Is Urgent Need For YOUR Help!</h4>
-    </div>
+<div class="splash">
+    <h2 style="margin: auto;">Have COVID-19 Antibodies?</h2>
+    <h4 style="margin: auto;">There Is Urgent Need For YOUR Help!</h4>
 </div>
+
 <div class="main main-raised">
     <div class="profile-content">
         <div class="container">
             <div class="row">
-                <h3>Nearby Opportunities</h3>
+                <h3 class="give-it-space">Nearby Opportunities</h3>
                 <div id="map" class="map"></div>
             </div>
             <div class="row">
