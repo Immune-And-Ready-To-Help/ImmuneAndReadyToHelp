@@ -11,16 +11,18 @@
 
     <style>
         .opp-title {
-            display: flex;
             padding-left: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
-        .opp-title:before {
-            height: 100px;
-            width: 200px;
-            content: "";
-            background: url(@Model.CompanyLogoUri) no-repeat 0 0;
-            background-size: 100px 100px;
+        .opp-image {
+            width: 80px;
+        }
+
+        .container{
+            width: 100% !important;
+            margin-bottom: 8px;
         }
     </style>
 }
@@ -31,10 +33,18 @@
 
     <div class="wrap-contact100">
         <form class="contact100-form validate-form">
-            <span class="contact100-form-title opp-title">
-                @Model.Title
-            </span>
-
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <img class="opp-image" src="@Model.CompanyLogoUri" />
+                    </div>
+                    <div class="col-xs-9">
+                        <span class="contact100-form-title opp-title">
+                            @Model.Title
+                        </span>
+                    </div>
+                </div>
+            </div>
             <div class="opp-info">
                 <strong>What's Needed</strong><br />
                 <span>@Model.Description</span>
