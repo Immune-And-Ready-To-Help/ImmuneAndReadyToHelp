@@ -1,7 +1,7 @@
 ﻿@page
-@model ImmuneAndReadyToHelp.Pages.ConfirmationModel
+@model ImmuneAndReadyToHelp.Pages.DeleteOpportunityModel
 @{
-    ViewData["Title"] = "Confirmation";
+    ViewData["Title"] = "Delete: " + Model.Title;
     Layout = "_Layout";
 }
 
@@ -29,22 +29,26 @@
 
 
 <div class="container-contact100">
-    <div class="contact100-map" id="google_map" longitude="@Model.AustinDefaultLocation.Longitude" latitude="@Model.AustinDefaultLocation.Latitude" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
+    <div class="contact100-map" id="google_map" longitude="@Model.OpportunityLocation.Longitude" latitude="@Model.OpportunityLocation.Latitude" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
 
     <div class="wrap-contact100">
         <form class="contact100-form validate-form">
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-3">
+                        <img class="opp-image" src="@Model.CompanyLogoUri" />
+                    </div>
+                    <div class="col-xs-9">
                         <span class="contact100-form-title opp-title">
-                            Almost There! Now Just Check Your Email to Activate Your Opportunity!
+                            Opportunity Deactivated: @Model.Title
                         </span>
                     </div>
                 </div>
             </div>
             <div class="opp-info">
                 <span>
-                    <strong>Please check your email</strong> for further instructions on how to activate, manage or deactivate your newly created opportunity.
+                    Your opportunity will no longer be discoverable to future applicants. If you'd like to reactivate the opportunity, you
+                    may do so by clicking the activation link in your opportunity management email.
                 </span>
             </div>
 
@@ -72,4 +76,3 @@
         });
     </script>
 }
-

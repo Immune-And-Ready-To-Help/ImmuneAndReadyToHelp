@@ -87,7 +87,7 @@ namespace ImmuneAndReadyToHelp.Pages
 
             await OpportunityDataAccess.UpsertOpportunity(newOpportunity);
 
-			await SendConfirmationEmail();
+			await SendConfirmationEmail(newOpportunity);
 
 			return RedirectToPage("Confirmation");
         }
@@ -139,13 +139,20 @@ namespace ImmuneAndReadyToHelp.Pages
             return null;
         }
 
-        private async Task SendConfirmationEmail()
+        private async Task SendConfirmationEmail(Opportunity opportunity)
         {
-			var emailBody = EmailTemplates.GetTemplate("OpportunityAdminEmail.html");
+            //add the necessary parameters for opportunity management
+            var parameterDictionary = new Dictionary<string, string>();
+
+            parameterDictionary.Add("EditId", opportunity.EditId);
+            parameterDictionary.Add("ActivationId", opportunity.ActivationId);
+            parameterDictionary.Add("DeleteId", opportunity.DeleteId);
+
+            var emailBody = EmailTemplates.GetTemplate("OpportunityAdminEmail.html", parameterDictionary);
 
 			var opportunityAdminEmail = new EmailMessage
             {
-				Subject = "Your ImmuneAndReadyToHelp.com Opportunity Is Now Live!",
+				Subject = $"ACTION REQUIRED: Your ImmuneAndReadyToHelp.com Opportunity ({opportunity.Title}) Is Almost Live!",
 				Body = emailBody,
 				To = EmailOfOpportunityContact
             };

@@ -18,7 +18,10 @@ namespace ImmuneAndReadyToHelp.Core.EmailTemplates
             using (var reader = new StreamReader(stream))
                 htmlTemplate = reader.ReadToEnd();
 
-            //TODO: do string replacement here to fill out email
+            //by convention, parameters in email body take the form "{key}" which will be replaced by the value in the parameter.
+            foreach (var parameter in valuesToInsert)
+                htmlTemplate = htmlTemplate.Replace($"{{{parameter.Key}}}", parameter.Value);
+
             return htmlTemplate;
         }
     }

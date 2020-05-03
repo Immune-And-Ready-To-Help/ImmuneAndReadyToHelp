@@ -11,7 +11,7 @@ namespace ImmuneAndReadyToHelp.Core
         Task<Opportunity> FindOpportunityByEditId(string editId);
         Task<Opportunity> FindOpportunityByDeleteId(string deleteId);
         Task<Opportunity> UpsertOpportunity(Opportunity opportunity);
-        Task<bool> DeleteOpportunity(Guid opportunityId);
+        Task<Opportunity> FindOpportunityByActivationId(string activationId);
         Task<List<Opportunity>> FindOpportunitiesInRange(Coordinate northWest, Coordinate southEast);
     }
 }

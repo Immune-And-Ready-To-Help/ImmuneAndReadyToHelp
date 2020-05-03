@@ -21,6 +21,7 @@ namespace ImmuneAndReadyToHelp.Core.Model
         public string FullAddress { get; set; }
         //TODO: automatically get lat/long based on postal code
         public Coordinate LocationOfOpportunity { get; set; }
+        public bool Active { get; set; } = false;
         public string Title
         {
             //sanitize in both cases in case we missed something in an earlier version of code
@@ -90,7 +91,8 @@ namespace ImmuneAndReadyToHelp.Core.Model
                 LocationOfOpportunity = centerOfMap,
                 CompanyLogo = new Uri("https://www.ImmuneAndReadyToHelp.com/images/Antibody.png"),
                 ExpirationDate = DateTime.Now,
-                OpportunityPageUri = new Uri("https://www.facebook.com/ImmuneAndReadyToHelp")
+                OpportunityPageUri = new Uri("https://www.facebook.com/ImmuneAndReadyToHelp"),
+                Active = true
             };
         }
     }

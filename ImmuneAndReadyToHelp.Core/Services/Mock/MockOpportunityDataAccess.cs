@@ -13,7 +13,17 @@ namespace ImmuneAndReadyToHelp.Core.Services.Mock
             throw new NotImplementedException();
         }
 
+        public Task<bool> DeleteOpportunity(string deleteId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<Opportunity>> FindOpportunitiesInRange(Coordinate topLeft, Coordinate bottomRight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Opportunity> FindOpportunityByActivationId(string activationId)
         {
             throw new NotImplementedException();
         }
@@ -33,7 +43,7 @@ namespace ImmuneAndReadyToHelp.Core.Services.Mock
             throw new NotImplementedException();
         }
 
-        public async Task<Opportunity> UpsertOpportunity(Opportunity opportunity)
+        public Task<Opportunity> UpsertOpportunity(Opportunity opportunity)
         {
             throw new NotImplementedException();
         }

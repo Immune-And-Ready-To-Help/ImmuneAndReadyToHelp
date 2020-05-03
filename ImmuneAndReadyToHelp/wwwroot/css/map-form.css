@@ -7,7 +7,7 @@ body{
 }
 h3 {
     margin: 12px 0;
-    color: #57b846;
+    color: #57b846 !important;
 }
 
 user agent stylesheet

@@ -47,32 +47,27 @@ namespace ImmuneAndReadyToHelp.Tests
         }
 
         [TestMethod]
+        public async Task TestActivateOpportunity()
+        {
+            await OpportunityDataAccess.ActivateOpportunity(
+                    Opportunity.ActivationId
+                );
+
+            //assumes immediate vs. eventual consistency
+            var activatedOopportunity = await FindById(Opportunity.OpportunityId);
+            Assert.IsTrue(activatedOopportunity.Active);
+        }
+
+        [TestMethod]
         public async Task TestDeleteOpportunity()
         {
             await OpportunityDataAccess.DeleteOpportunity(
-                    Opportunity.OpportunityId
+                    Opportunity.DeleteId
                 );
 
             //assumes immediate vs. eventual consistency
             var deletedOpportunity = await FindById(Opportunity.OpportunityId);
-            Assert.IsNull(deletedOpportunity);
-        }
-
-        [TestMethod]
-        public async Task TestDeleteOpportunityByDeleteId()
-        {
-            var opportunityToDelete = await OpportunityDataAccess.FindOpportunityByDeleteId(
-                    Opportunity.DeleteId
-                );
-            Assert.IsNotNull(opportunityToDelete);
-
-            await OpportunityDataAccess.DeleteOpportunity(
-                    opportunityToDelete.OpportunityId
-                );
-
-            //assumes immediate vs. eventual consistency
-            var deletedOpportunity = await FindById(opportunityToDelete.OpportunityId);
-            Assert.IsNull(deletedOpportunity);
+            Assert.IsFalse(deletedOpportunity.Active);
         }
 
         [TestMethod]

@@ -46,14 +46,22 @@ namespace ImmuneAndReadyToHelp.Core.Services
             return results.FirstOrDefault();
         }
 
-        public async Task<bool> DeleteOpportunity(Guid opportunityId)
+        public async Task<Opportunity> FindOpportunityByActivationId(string activationId)
         {
-            var result = await OpportunitiesCollection.DeleteOneAsync((o) => o.OpportunityId == opportunityId);
-            return result.IsAcknowledged;
+            var results = await OpportunitiesCollection.FindAsync(
+                doc => doc.ActivationId == activationId
+                );
+            return results.FirstOrDefault();
         }
 
         public async Task<List<Opportunity>> FindOpportunitiesInRange(Coordinate topLeft, Coordinate bottomRight)
         {
+            var sortByExpirationDate = Builders<Opportunity>.Sort.Descending((o) => o.ExpirationDate);
+            var options = new FindOptions<Opportunity>
+            {
+                Sort = sortByExpirationDate
+            };
+
             var results = await OpportunitiesCollection.FindAsync(
                 //this math is imperfect because it doesn't account for edges of where lat/long ends
                 //however, it will work for now
@@ -61,6 +69,9 @@ namespace ImmuneAndReadyToHelp.Core.Services
                         && doc.LocationOfOpportunity.Latitude <= topLeft.Latitude
                         && doc.LocationOfOpportunity.Latitude >= bottomRight.Latitude
                         && doc.LocationOfOpportunity.Longitude <= bottomRight.Longitude
+                        && doc.ExpirationDate >= DateTime.Now
+                        && doc.Active,
+                options
                 );
             //just return everything for now. TODO: page or limit results.
             return results?.ToList() ?? new List<Opportunity>();
