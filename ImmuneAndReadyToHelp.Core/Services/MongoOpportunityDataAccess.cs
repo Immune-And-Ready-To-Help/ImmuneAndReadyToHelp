@@ -56,7 +56,7 @@ namespace ImmuneAndReadyToHelp.Core.Services
 
         public async Task<List<Opportunity>> FindOpportunitiesInRange(Coordinate topLeft, Coordinate bottomRight)
         {
-            var sortByExpirationDate = Builders<Opportunity>.Sort.Descending((o) => o.ExpirationDate);
+            var sortByExpirationDate = Builders<Opportunity>.Sort.Ascending((o) => o.ExpirationDate);
             var options = new FindOptions<Opportunity>
             {
                 Sort = sortByExpirationDate
