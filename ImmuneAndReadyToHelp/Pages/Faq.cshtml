@@ -1,8 +1,106 @@
 ﻿@page
 @model ImmuneAndReadyToHelp.Pages.FaqModel
 @{
+
+    ViewData["Title"] = "FAQ";
+    Layout = "_Layout";
 }
 
-<div class="jumbotron text-center">
-    <h1 class="display-3">Under Construction</h1>
+@section Head{
+    <link rel="icon" type="image/png" href="~/images/Antibody.png" />
+    <link rel="stylesheet" type="text/css" href="~/css/map-form.css" asp-append-version="true" />
+
+    <style>
+        .opp-title {
+            padding-left: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        .opp-image {
+            width: 80px;
+        }
+
+        .container {
+            width: 100% !important;
+            margin-bottom: 8px;
+        }
+    </style>
+}
+
+
+<div class="container-contact100">
+    <div class="contact100-map" id="google_map" longitude="@Model.AustinDefaultLocation.Longitude" latitude="@Model.AustinDefaultLocation.Latitude" data-pin="images/icons/map-marker.png" data-scrollwhell="0" data-draggable="1"></div>
+
+    <div class="wrap-contact100">
+        <form class="contact100-form validate-form">
+            <div class="opp-info">
+                <span>
+                    This page contains some of the latest news regarding COVID-19 antibodies. Where possible the info comes
+                    straight from health authorities.
+                </span>
+            </div>
+
+            <h3>
+                Does Having Antibodies Make Me Immune To COVID-19?
+            </h3>
+            <div class="opp-info">
+                <span>
+                    It's indefinite, but most scientists believe having COVID-19 antibodies will
+                    give some protection, though the degree and duration of protection is unclear and needs more research.
+                </span>
+            </div>
+            <blockquote class="twitter-tweet"><p lang="en" dir="ltr">To avoid further confusion, we are taking down the previous thread on the <a href="https://twitter.com/hashtag/COVID19?src=hash&amp;ref_src=twsrc%5Etfw">#COVID19</a> &quot;immunity passport&quot;, but you can still see it here👇 <a href="https://t.co/bLx3bRDaTB">pic.twitter.com/bLx3bRDaTB</a></p>&mdash; World Health Organization (WHO) (@@WHO) <a href="https://twitter.com/WHO/status/1254160944638447618?ref_src=twsrc%5Etfw">April 25, 2020</a></blockquote>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            <h3>
+                How Accurate Are Antibody Tests?
+            </h3>
+
+            <div class="opp-info">
+                <span>
+                    Early tests by companies like Cellex and Premier Biotech had accuracy rates as low as 80.3%, however testing
+                    accuracy continues to improve and Roche's recently FDA-approved test boasts an accuracy rate of 99.8%.
+                </span>
+            </div>
+            <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Roche’s COVID-19 antibody test receives FDA Emergency Use Authorization; will provide high double-digit millions of tests already in May.<a href="https://t.co/eSAoeWbXXX">https://t.co/eSAoeWbXXX</a> <a href="https://t.co/zc54stmyGw">pic.twitter.com/zc54stmyGw</a></p>&mdash; Roche Diagnostics USA (@@RocheDiaUSA) <a href="https://twitter.com/RocheDiaUSA/status/1256971533223854082?ref_src=twsrc%5Etfw">May 3, 2020</a></blockquote>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            <h3>
+                Does ImmuneAndReadyToHelp.com guarantee immunity of applicants?
+            </h3>
+
+            <div class="opp-info">
+                <span>
+                    <p><strong>No!</strong> Due to the ever-evolving landscape of the world's understanding of COVID-19 antibodies and testing,
+                    we make no guarantees of immunity and leave it up to organizations to adapt to the latest information in choosing how
+                    they verify antibodies and possible immunity levels in applicants.</p>
+                    <p>We will try to keep the FAQ page updated as more about COVID-19 and antibody response becomes known.</p>
+                </span>
+            </div>
+
+            <div class="container-contact100-form-btn">
+                <button id="view-opportunity-button" class="contact100-form-btn">
+                    Go To Home Page
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
+<!--===============================================================================================-->
+
+@section Scripts{
+    <script defer src="@Href("https://maps.googleapis.com/maps/api/js?&key=" + Model.GoogleMapsApiKey)">
+    </script>
+
+    <script defer src="~/js/form-map.js" asp-append-version="true"></script>
+
+    <script>
+        $( "#view-opportunity-button" ).click(() => {
+            window.location = "/";
+            return false;
+        });
+    </script>
+}
+
